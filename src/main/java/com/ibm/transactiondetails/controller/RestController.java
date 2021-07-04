@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +40,7 @@ public class RestController {
 	}
 
 	@RequestMapping(method=RequestMethod.GET, path="/get")
-	public @ResponseBody List<TransactionDetails> getTransactions(@RequestParam(required=false) Integer customerId) {
+	public ResponseEntity<List<TransactionDetails>> getTransactions(@RequestParam(required=false) Integer customerId) {
 		System.out.println("aggregate category method get transactions..... start");
 		List<TransactionDetails> allDocs = null;
 		
@@ -62,7 +64,7 @@ public class RestController {
 			}
 		
 		System.out.println("aggregate category method get transctions..... END");
-		return allDocs;
+		return new ResponseEntity<>(allDocs, HttpStatus.OK);
 	}
 	
 }
